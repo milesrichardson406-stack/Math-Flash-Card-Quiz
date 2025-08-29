@@ -1,1 +1,9 @@
-
+<!-- Earthbound Embed -->
+<iframe 
+  src="https://mitchlist.github.io/earthboundjs/" 
+  width="800" 
+  height="600" 
+  frameborder="0" 
+  scrolling="no" 
+  allowfullscreen>
+</iframe>
