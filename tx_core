@@ -1,1 +1,8 @@
-
+<!-- Embedded Undertale HTML version (by friskyy) -->
+<iframe
+  frameborder="0"
+  src="https://friskyy.itch.io/undertale-online-html-version/embed"
+  width="960"
+  height="600"
+  allowfullscreen>
+</iframe>
