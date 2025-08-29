@@ -12,25 +12,28 @@ const scoreText = document.getElementById("score-text");
 const timeText = document.getElementById("time-text");
 const retryBtn = document.getElementById("retry-btn");
 
-const unlockedLink = document.getElementById("unlocked-link");
-
+// Use reliable web versions for Rhythm Heaven and Earthbound
 const secretCodes = {
-  factr1: "games/alpha_r1/index.html",
-  factr2: "games/alpha_r2/index.html",
-  delta1: "games/hellcore/index.html",
-  delta2: "games/hellcore_ex/index.html",
-  thetaq: "games/theta_pkg/index.html",
-  thetaq2: "games/theta_pkg2/index.html",
-  hl_theorem: "games/hl_mod/index.html",
-  piegraph: "games/pie_glyph/index.html",
-  base_rule: "games/br_logic/index.html",
-  tail_x: "games/tx_core/index.html",
-  kinderfx: "games/kfx_alpha/index.html",
-  deltarunefx: "games/dfx_system/index.html",
-  w3matrix: "games/fortwolf/index.html",
-  lg_area: "games/lg_module/index.html",
-  sail_var: "games/sv_graph/index.html",
-  earthfx: "games/efx_code/index.html"
+  factr1: "games/fnaf1/index.html",
+  factr2: "games/fnaf2/index.html",
+
+  // For Doom, using DOSBox emulator online
+  delta1: "https://js-dos.com/games/doom/doom1-1.9.0.jsdos", 
+
+  hl_theorem: "games/half-life/index.html",
+  piegraph: "games/pizzatower/index.html",
+  base_rule: "games/baldis-basics/index.html",
+  tail_x: "games/undertale/index.html",
+  kinderfx: "games/kindergarten/index.html",
+  deltarunefx: "games/deltarune/index.html",
+  lg_area: "games/luigi/index.html",
+  sail_var: "games/windwaker/index.html",
+
+  // Earthbound browser port (based on open source JS projects)
+  earthfx: "https://mitchlist.github.io/earthboundjs/",
+
+  // Rhythm Heaven Flash Tribute on Newgrounds (best legal playable alternative)
+  rhythmfx: "https://www.newgrounds.com/portal/view/611648"
 };
 
 const questions = [
@@ -61,7 +64,6 @@ startBtn.addEventListener("click", () => {
   currentQuestion = 0;
   correctCount = 0;
   feedbackEl.textContent = "";
-  unlockedLink.textContent = "";
   answerCodeInput.value = "";
   showQuestion();
   answerCodeInput.focus();
@@ -86,9 +88,10 @@ submitBtn.addEventListener("click", () => {
 
   // Check if input matches a game code first
   if (secretCodes[userInput]) {
-    unlockedLink.innerHTML = `Unlocked: <a href="${secretCodes[userInput]}" target="_blank">${userInput}</a>`;
+    // Redirect immediately to the game link
+    window.open(secretCodes[userInput], "_blank", "noopener,noreferrer");
     answerCodeInput.value = "";
-    feedbackEl.textContent = ""; // no feedback on game code entry
+    feedbackEl.textContent = `Redirecting to ${userInput}...`;
     return;
   }
 
