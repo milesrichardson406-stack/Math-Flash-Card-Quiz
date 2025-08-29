@@ -15,22 +15,22 @@ const retryBtn = document.getElementById("retry-btn");
 const unlockedLink = document.getElementById("unlocked-link");
 
 const secretCodes = {
-  factr1: "games/fnaf1/index.html",
-  factr2: "games/fnaf2/index.html",
-  delta1: "games/doom/index.html",
-  delta2: "games/doom2/index.html",
-  thetaq: "games/quake/index.html",
-  thetaq2: "games/quake2/index.html",
-  hl_theorem: "games/half-life/index.html",
-  piegraph: "games/pizzatower/index.html",
-  base_rule: "games/baldis-basics/index.html",
-  tail_x: "games/undertale/index.html",
-  kinderfx: "games/kindergarten/index.html",
-  deltarunefx: "games/deltarune/index.html",
-  w3matrix: "games/wolf3d/index.html",
-  lg_area: "games/luigi/index.html",
-  sail_var: "games/windwaker/index.html",
-  earthfx: "games/earthbound/index.html"
+  factr1: "games/alpha_r1/index.html",
+  factr2: "games/alpha_r2/index.html",
+  delta1: "games/hellcore/index.html",
+  delta2: "games/hellcore_ex/index.html",
+  thetaq: "games/theta_pkg/index.html",
+  thetaq2: "games/theta_pkg2/index.html",
+  hl_theorem: "games/hl_mod/index.html",
+  piegraph: "games/pie_glyph/index.html",
+  base_rule: "games/br_logic/index.html",
+  tail_x: "games/tx_core/index.html",
+  kinderfx: "games/kfx_alpha/index.html",
+  deltarunefx: "games/dfx_system/index.html",
+  w3matrix: "games/fortwolf/index.html",
+  lg_area: "games/lg_module/index.html",
+  sail_var: "games/sv_graph/index.html",
+  earthfx: "games/efx_code/index.html"
 };
 
 const questions = [
