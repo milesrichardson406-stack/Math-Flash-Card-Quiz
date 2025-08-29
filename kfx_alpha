@@ -1,1 +1,9 @@
-
+<!-- Kindergarten (GameFlare) Embed -->
+<iframe
+  src="https://www.gameflare.com/embed/kindergarten/"
+  frameborder="0"
+  scrolling="no"
+  width="700"
+  height="560"
+  allowfullscreen>
+</iframe>
