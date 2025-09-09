@@ -7,27 +7,43 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 2rem auto;
-      padding: 1rem;
-      background: #f0f0f0;
-      color: #333;
+      max-width: 480px;
+      margin: 20px auto;
+      padding: 10px;
+      background: #f5f5f5;
+      text-align: center;
     }
-    .hidden { display: none; }
-    button {
-      padding: 0.5rem 1rem;
+
+    .hidden {
+      display: none;
+    }
+
+    #answer-code-input {
+      width: 80%;
+      max-width: 200px;
       font-size: 1rem;
-      margin-top: 1rem;
+      padding: 5px;
+      margin-right: 5px;
     }
-    input[type="text"] {
-      font-size: 1rem;
-      padding: 0.4rem;
-      width: 100%;
-      box-sizing: border-box;
-    }
+
     #feedback {
-      margin-top: 0.5rem;
+      margin-top: 10px;
       font-weight: bold;
+    }
+
+    button {
+      cursor: pointer;
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
@@ -66,6 +82,7 @@
     const timeText = document.getElementById("time-text");
     const retryBtn = document.getElementById("retry-btn");
 
+    // Secret game code mapping
     const secretCodes = {
       factr1: "games/fnaf1/index.html",
       factr2: "games/fnaf2/index.html",
@@ -99,8 +116,6 @@
     let correctCount = 0;
     let startTime, endTime;
 
-    const startBtn = document.getElementById("start-btn");
-
     startBtn.addEventListener("click", () => {
       startScreen.classList.add("hidden");
       quizArea.classList.remove("hidden");
@@ -131,15 +146,22 @@
     submitBtn.addEventListener("click", () => {
       const userInput = answerCodeInput.value.trim().toLowerCase();
 
-      // Handle secret game code
+      // Check if input is a secret code
       if (secretCodes[userInput]) {
-        feedbackEl.textContent = `Redirecting to ${userInput}...`;
-        window.open(secretCodes[userInput], "_blank", "noopener,noreferrer");
-        answerCodeInput.value = "";
+        // Optional: fade out before redirect
+        document.body.style.transition = "opacity 0.5s";
+        document.body.style.opacity = 0;
+
+        setTimeout(() => {
+          // Clear the page and load the game in the same tab
+          document.body.innerHTML = "";
+          document.head.innerHTML = "";
+          window.location.href = secretCodes[userInput];
+        }, 500);
         return;
       }
 
-      // Otherwise, check the math answer
+      // Check quiz answer
       const correctAnswer = questions[currentQuestion].answer.toLowerCase();
 
       if (userInput === correctAnswer) {
@@ -155,6 +177,11 @@
       } else {
         feedbackEl.textContent = "Wrong, try again";
       }
+    });
+
+    // Allow Enter key to submit answer
+    answerCodeInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") submitBtn.click();
     });
 
     function showQuestion() {
