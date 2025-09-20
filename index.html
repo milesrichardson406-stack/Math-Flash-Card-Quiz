@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Math Quiz</title>
+  <title>Working Math Quiz</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -18,44 +18,36 @@
       display: none;
     }
 
-    #answer-code-input {
-      width: 80%;
-      max-width: 200px;
-      font-size: 1rem;
-      padding: 5px;
-      margin-right: 5px;
-    }
-
-    #feedback {
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
     button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin-top: 10px;
       cursor: pointer;
-      padding: 8px 16px;
       background-color: #007bff;
       color: white;
       border: none;
       border-radius: 4px;
-      font-size: 1rem;
-      transition: background-color 0.2s;
     }
 
     button:hover {
       background-color: #0056b3;
     }
 
-    #feedback.correct {
-      color: green;
+    #answer-code-input {
+      padding: 8px;
+      font-size: 1rem;
+      width: 80%;
+      max-width: 200px;
     }
 
-    #feedback.wrong {
-      color: red;
+    #feedback {
+      font-weight: bold;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
+
   <div id="start-screen">
     <h1>Math Quiz</h1>
     <button id="start-btn">Start Quiz</button>
@@ -64,7 +56,7 @@
   <div id="quiz-area" class="hidden">
     <p id="progress"></p>
     <p id="question"></p>
-    <input type="text" id="answer-code-input" autocomplete="off" />
+    <input type="text" id="answer-code-input" />
     <button id="submit-btn">Submit</button>
     <p id="feedback"></p>
   </div>
@@ -76,7 +68,7 @@
   </div>
 
   <script>
-    // Element references
+    // DOM elements
     const startBtn = document.getElementById("start-btn");
     const retryBtn = document.getElementById("retry-btn");
     const startScreen = document.getElementById("start-screen");
@@ -91,32 +83,16 @@
     const scoreText = document.getElementById("score-text");
     const timeText = document.getElementById("time-text");
 
-    // Quiz questions
     const questions = [
-      { question: "Find the derivative of f(x) = 3x^4 - 5x^2 + 7.", answer: "12x^3 - 10x" },
-      { question: "Evaluate the integral ∫ (2x^3 - 4x) dx.", answer: "1/4x^4 - 2x^2 + C" },
-      { question: "Simplify: (2x^2)(3x^3).", answer: "6x^5" },
-      { question: "Solve for x: 2x + 3 = 7.", answer: "2" },
-      { question: "Find d/dx sin(x^2).", answer: "2x cos(x^2)" }
+      { question: "2 + 2 = ?", answer: "4" },
+      { question: "5 * 3 = ?", answer: "15" },
     ];
-
-    // Secret game codes
-    const secretCodes = {
-      factr1: "games/fnaf1/index.html",
-      hl_theorem: "games/half-life/index.html",
-      delta1: "https://js-dos.com/games/doom/doom1-1.9.0.jsdos"
-    };
 
     let currentQuestion = 0;
     let correctCount = 0;
     let startTime, endTime;
 
-    // Helper: Normalize input for matching
-    function normalize(str) {
-      return str.replace(/\s+/g, "").toLowerCase();
-    }
-
-    // Start quiz
+    // START BUTTON WORKS ✅
     startBtn.addEventListener("click", () => {
       startScreen.classList.add("hidden");
       quizArea.classList.remove("hidden");
@@ -126,82 +102,54 @@
       startTime = Date.now();
       answerInput.value = "";
       feedbackEl.textContent = "";
-      feedbackEl.className = "";
       showQuestion();
       answerInput.focus();
     });
 
-    // Retry quiz
     retryBtn.addEventListener("click", () => {
       resultArea.classList.add("hidden");
       quizArea.classList.remove("hidden");
       currentQuestion = 0;
       correctCount = 0;
       startTime = Date.now();
-      answerInput.value = "";
-      feedbackEl.textContent = "";
-      feedbackEl.className = "";
       showQuestion();
-      answerInput.focus();
     });
 
-    // Submit answer
     submitBtn.addEventListener("click", () => {
       const userInput = answerInput.value.trim();
-
-      // Check for secret code
-      if (secretCodes[userInput.toLowerCase()]) {
-        document.body.style.transition = "opacity 0.5s";
-        document.body.style.opacity = 0;
-
-        setTimeout(() => {
-          window.location.href = secretCodes[userInput.toLowerCase()];
-        }, 500);
-        return;
-      }
-
       const correctAnswer = questions[currentQuestion].answer;
 
-      if (normalize(userInput) === normalize(correctAnswer)) {
+      if (userInput === correctAnswer) {
         feedbackEl.textContent = "Correct!";
-        feedbackEl.className = "correct";
         correctCount++;
         currentQuestion++;
         answerInput.value = "";
-
         if (currentQuestion >= questions.length) {
           endQuiz();
         } else {
           showQuestion();
         }
       } else {
-        feedbackEl.textContent = "Wrong, try again.";
-        feedbackEl.className = "wrong";
+        feedbackEl.textContent = "Wrong. Try again.";
       }
     });
 
-    // Allow Enter key to submit
-    answerInput.addEventListener("keypress", function (e) {
-      if (e.key === "Enter") {
-        submitBtn.click();
-      }
-    });
-
-    // Show current question
     function showQuestion() {
       const q = questions[currentQuestion];
       questionEl.textContent = q.question;
       progressEl.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
       feedbackEl.textContent = "";
-      feedbackEl.className = "";
     }
 
-    // End quiz
     function endQuiz() {
       endTime = Date.now();
       quizArea.classList.add("hidden");
       resultArea.classList.remove("hidden");
 
-      const seconds = ((endTime - startTime) / 1000).toFixed(1);
-      const minutes = Math.floor(seconds / 60);
-      const secs = (seconds % 60).toFixed
+      const timeTaken = ((endTime - startTime) / 1000).toFixed(1);
+      scoreText.textContent = `Score: ${correctCount} / ${questions.length}`;
+      timeText.textContent = `Time: ${timeTaken} seconds`;
+    }
+  </script>
+</body>
+</html>
